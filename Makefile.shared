@@ -1,0 +1,25 @@
+TARGET = libpercent_encoding.so.0.0.1
+
+SRCS = src/percent_encoding_encode.cpp src/percent_encoding_decode.cpp
+OBJS = $(addsuffix .o,$(basename $(SRCS)))
+
+CXXFLAGS += -std=c++11 -Iinclude -shared -fPIC
+LDFLAGS = -shared -Wl,-soname=libpercent_encoding.so.0.0.1
+
+.SUFFIXES: .cpp .hpp
+.PHONY: all test clean distclean
+
+all: $(TARGET)
+	ln -s libpercent_encoding.so.0.0.1 libpercent_encoding.so
+
+$(TARGET): $(OBJS)
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
+
+clean:
+	rm -f *.o
+
+distclean:
+	make clean && rm -f {$(TARGET),libpercent_encoding.so}

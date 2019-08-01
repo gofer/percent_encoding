@@ -1,2 +1,6 @@
+libpercent_encoding.a
+libpercent_encoding.so
+libpercent_encoding.so.0
+libpercent_encoding.so.0.0.1
 *.o
 *.out
