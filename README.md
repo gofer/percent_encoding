@@ -27,10 +27,11 @@ Decode function is in namespace PercentEncoding.
     std::string PercentEncoding::decode(const std::string& src);
 
 ### Examples
-In detail, please shows percent_encoding_test.cpp.
-That code is compiled on following commands.
+In detail, please shows test/percent_encoding_test.cpp.
+That code is built on following commands.
 
-    g++ percent_encoding_encode.cpp percent_encoding_decode.cpp percent_encoding_test.cpp -I. -lstdc++ -std=c++11 -o test.out
+    make
+    make check
 
 ## Licence
 This codes are licensed by New BSD License.
