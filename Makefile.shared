@@ -1,16 +1,21 @@
-TARGET = libpercent_encoding.so.0.0.1
+MAJOR_VERSION=0
+VERSION=$(MAJOR_VERSION).0.1
+
+TARGET_BASENAME = libpercent_encoding.so
+TARGET = $(TARGET_BASENAME).$(VERSION)
 
 SRCS = src/percent_encoding_encode.cpp src/percent_encoding_decode.cpp
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
 
 CXXFLAGS += -std=c++11 -Iinclude -shared -fPIC
-LDFLAGS = -shared -Wl,-soname=libpercent_encoding.so.0.0.1
+LDFLAGS = -shared -Wl,-soname=libpercent_encoding.so.$(VERSION)
 
 .SUFFIXES: .cpp .hpp
 .PHONY: all test clean distclean
 
 all: $(TARGET)
-	ln -s libpercent_encoding.so.0.0.1 libpercent_encoding.so
+	ln -s $(TARGET) $(TARGET_BASENAME).$(MAJOR_VERSION)
+	ln -s $(TARGET) $(TARGET_BASENAME)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $@ $^
@@ -18,8 +23,14 @@ $(TARGET): $(OBJS)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
+check: $(TARGET)
+	@#cd test; make test GTEST_DIR=/usr/local/googletest/googletest-1.8.0
+	pushd test && make check && popd
+
 clean:
+	pushd test && make clean && popd
 	rm -f *.o
 
 distclean:
-	make clean && rm -f {$(TARGET),libpercent_encoding.so}
+	pushd test && make distclean && popd
+	make clean && rm -f {$(TARGET),$(TARGET_BASENAME).$(MAJOR_VERSION),$(TARGET_BASENAME)}

@@ -17,14 +17,14 @@ $(TARGET): $(OBJS)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
-test: $(TARGET)
+check: $(TARGET)
 	@#cd test; make test GTEST_DIR=/usr/local/googletest/googletest-1.8.0
-	@echo 'test!'
+	pushd test && make check && popd
 
 clean:
-	#pushd test && make clean && popd
+	pushd test && make clean && popd
 	rm -f src/*.o
 
 distclean:
-	#pushd test && make distclean && popd
+	pushd test && make distclean && popd
 	make clean && rm -f $(TARGET)
