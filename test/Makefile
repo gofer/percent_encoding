@@ -1,10 +1,11 @@
 TARGET = test.out
 
-SRCS = percent_encoding_test.cpp
-OBJS = $(addsuffix .o,$(basename $(SRCS)))
+SRCS=test.cpp
+OBJS=$(addsuffix .o,$(basename $(SRCS)))
 
-CXXFLAGS += -std=c++11 -I../include
-LDFLAGS = -L..
+LD = g++
+LDFLAGS += -L.. -L$(GTEST_DIR)/lib
+CXXFLAGS += -std=c++11 -I../include -I$(GTEST_DIR)/include
 
 .SUFFIXES: .cpp .hpp
 .PHONY: all test clean distclean
@@ -12,13 +13,13 @@ LDFLAGS = -L..
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(LDFLAGS) -o $@ $^ -lpercent_encoding -lstdc++
+	$(LD) $(LDFLAGS) -o $@ $^ -lpercent_encoding -lgtest -lgtest_main -lpthread -lstdc++
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 check: $(TARGET)
-	LD_LIBRARY_PATH=..:${LD_LIBRARY_PATH} ./$(TARGET)
+	@LD_LIBRARY_PATH=..:${LD_LIBRARY_PATH} ./$(TARGET)
 
 clean:
 	rm -f *.o
