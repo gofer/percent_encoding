@@ -23,8 +23,10 @@ check: $(TARGET)
 
 clean:
 	pushd test && make clean && popd
+	pushd sample && make clean && popd
 	rm -f src/*.o
 
 distclean:
 	pushd test && make distclean && popd
+	pushd sample && make distclean && popd
 	make clean && rm -f $(TARGET)

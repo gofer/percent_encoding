@@ -1,4 +1,4 @@
-TARGET = test.out
+TARGET = percent_encode.out
 
 SRCS = percent_encoding_test.cpp
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
@@ -18,7 +18,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 check: $(TARGET)
-	LD_LIBRARY_PATH=..:${LD_LIBRARY_PATH} ./$(TARGET)
+	@echo 'こんにちは' |  LD_LIBRARY_PATH=..:${LD_LIBRARY_PATH} ./$(TARGET) -s
 
 clean:
 	rm -f *.o
