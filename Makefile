@@ -18,7 +18,6 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 check: $(TARGET)
-	@#cd test; make test GTEST_DIR=/usr/local/googletest/googletest-1.8.0
 	pushd test && make check && popd
 
 clean:
