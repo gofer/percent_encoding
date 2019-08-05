@@ -13,7 +13,7 @@ CXXFLAGS += -std=c++11 -I../include $(shell pkg-config --cflags gtest gtest_main
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) -o $@ $^ -lpercent_encoding -lstdc++
+	$(LD) $(LDFLAGS) -o $@ $^ -lpercent_encoding $(MYLIBS)
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
