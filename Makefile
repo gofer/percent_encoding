@@ -13,7 +13,7 @@ SOBJS = $(addsuffix .so,$(basename $(SRCS)))
 override CXXFLAGS += -std=c++11 -Iinclude
 SHARED_CXXFLAGS += -shared -fPIC
 SHARED_LDFLAGS += -shared -Wl,-soname=libpercent_encoding.so.$(VERSION)
-ARFLAGS = rsv
+ARFLAGS = -rsv
 
 .SUFFIXES: .cpp .hpp .o .so .a
 .PHONY: all test clean distclean
@@ -24,7 +24,7 @@ debug:
 	make all CXXFLAGS='-g -D__DEBUG__'
 
 $(STATIC_TARGET): $(OBJS)
-	$(AR) $(ARFLAGS) -o $@ $^
+	$(AR) $(ARFLAGS) $@ $^
 
 $(SHARED_TARGET): $(SHARED_TARGET).$(VERSION)
 	if [ ! -f $@ ]; then ln -s $(SHARED_TARGET).$(VERSION) $@; fi
